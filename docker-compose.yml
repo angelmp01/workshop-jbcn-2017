@@ -1,0 +1,21 @@
+version: "3"
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    hostname: gitlab.cecoel.local
+    restart: always
+    ports:
+      - "443:443"
+      - "80:80"
+      - "2222:22"
+    volumes:
+      - db-data:/etc/gitlab
+      - db-data:/var/log/gitlab
+      - db-data:/var/opt/gitlab
+    networks:
+      stack-ci-network:
+networks:
+  stack-ci-network:
+volumes:
+    db-data:
+        driver: local

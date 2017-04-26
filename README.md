@@ -1,0 +1,16 @@
+# workshop-jbcn-2017
+Code base to support the workshop
+
+# Motivation
+Developers nowadays are very comfortable with software life cycle management and ceremonies around agile methodologies 
+but the reality is that every time we need to setup a CI environment from scratch there is always struggling and suffering involved. 
+Also the resulting environment contains a lot of moving parts that requires to have a solid mechanism to trace logs 
+and metrics and liaising with sysadmins is out of the equation.
+# What is this for?
+We propose a solution that aims at minimising the time-to-market by providing an ecosystem that is able to help developers and QA's
+to deliver fast and quality code focusing on coding itself and not in the infrastructure or the setting up of the environment required.
+# What´s under the hood?
+- Gitlab
+## Requirements
+- Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
+- Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
