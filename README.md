@@ -11,6 +11,7 @@ We propose a solution that aims at minimising the time-to-market by providing an
 to deliver fast and quality code focusing on coding itself and not in the infrastructure or the setting up of the environment required.
 # What´s under the hood?
 - Gitlab
+- Jenkins
 ## Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)

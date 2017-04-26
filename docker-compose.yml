@@ -2,20 +2,32 @@ version: "3"
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
-    hostname: gitlab.cecoel.local
+    hostname: gitlab
     restart: always
     ports:
       - "443:443"
       - "80:80"
       - "2222:22"
     volumes:
-      - db-data:/etc/gitlab
-      - db-data:/var/log/gitlab
-      - db-data:/var/opt/gitlab
+      - "/srv/gitlab/config:/etc/gitlab"
+      - "/srv/gitlab/logs:/var/log/gitlab"
+      - "/srv/gitlab/data:/var/opt/gitlab"
+    networks:
+      stack-ci-network:
+  jenkins:
+    image: jenkinsci/jenkins:lts
+    hostname: jenkins
+    restart: always
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+      - "4444:4444"
+    volumes:
+      - data-volume:/var/jenkins_home
     networks:
       stack-ci-network:
 networks:
   stack-ci-network:
 volumes:
-    db-data:
-        driver: local
+  data-volume:
+    driver: local
