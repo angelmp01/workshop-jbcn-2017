@@ -5,13 +5,11 @@ services:
     hostname: gitlab
     restart: always
     ports:
-      - "443:443"
-      - "80:80"
-      - "2222:22"
+      - 80:80
     volumes:
-      - "/srv/gitlab/config:/etc/gitlab"
-      - "/srv/gitlab/logs:/var/log/gitlab"
-      - "/srv/gitlab/data:/var/opt/gitlab"
+      - gitlab-data-config:/etc/gitlab
+      - gitlab-data-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
     networks:
       stack-ci-network:
   jenkins:
@@ -20,15 +18,23 @@ services:
     hostname: jenkins
     restart: always
     ports:
-      - "8080:8080"
-      - "50000:50000"
-      - "4444:4444"
+      - 8080:8080
+      - 50000:50000
     volumes:
-      - data-volume:/var/jenkins_home
+      - jenkins-data:/var/jenkins_home
     networks:
       stack-ci-network:
+  nexus:
+    image: sonatype/nexus3
+    ports:
+      - 8081:8081
+    volumes:
+      - nexus-data:/nexus-data
 networks:
   stack-ci-network:
 volumes:
-  data-volume:
-    driver: local
+  gitlab-data-config: {}
+  gitlab-data-logs: {}
+  gitlab-data: {}
+  jenkins-data: {}
+  nexus-data: {}
