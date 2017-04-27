@@ -15,7 +15,8 @@ services:
     networks:
       stack-ci-network:
   jenkins:
-    image: jenkinsci/jenkins:lts
+    build:
+      context: ./jenkins
     hostname: jenkins
     restart: always
     ports:

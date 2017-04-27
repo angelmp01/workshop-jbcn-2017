@@ -1,0 +1,17 @@
+config-file-provider
+git
+git-client
+git-server
+gitlab-plugin
+workflow-scm-step
+workflow-step-api
+credentials
+ssh-credentials
+structs
+token-macro
+mailer
+matrix-project
+scm-api
+junit
+script-security
+display-url-api
