@@ -26,6 +26,8 @@ services:
       stack-ci-network:
   nexus:
     image: sonatype/nexus3
+    hostname: nexus
+    restart: always
     ports:
       - 8081:8081
     volumes:
@@ -34,10 +36,22 @@ services:
      stack-ci-network:
   sonarqube:
     image: sonarqube
+    hostname: sonarqube
+    restart: always
     ports:
       - 9000:9000
     volumes:
       - sonarqube-data:/opt/sonarqube/data
+    networks:
+      stack-ci-network:
+  registry:
+    image: registry
+    hostname: registry
+    restart: always
+    ports:
+      - 5000:5000
+    volumes:
+      - registry-data:/var/lib/registry
     networks:
       stack-ci-network:
 networks:
@@ -49,3 +63,4 @@ volumes:
   jenkins-data:
   nexus-data:
   sonarqube-data:
+  registry-data:
