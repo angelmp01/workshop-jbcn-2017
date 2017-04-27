@@ -30,11 +30,22 @@ services:
       - 8081:8081
     volumes:
       - nexus-data:/nexus-data
+    networks:
+     stack-ci-network:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - 9000:9000
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+    networks:
+      stack-ci-network:
 networks:
   stack-ci-network:
 volumes:
-  gitlab-data-config: {}
-  gitlab-data-logs: {}
-  gitlab-data: {}
-  jenkins-data: {}
-  nexus-data: {}
+  gitlab-data-config:
+  gitlab-data-logs:
+  gitlab-data:
+  jenkins-data:
+  nexus-data:
+  sonarqube-data:

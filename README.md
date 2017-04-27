@@ -16,6 +16,8 @@ to deliver fast and quality code focusing on coding itself and not in the infras
     - Accesible via port 8080
 - Nexus
     - Accesible via port 8081
+- Sonarqube
+    - Accesible via port 9000
 ## Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
