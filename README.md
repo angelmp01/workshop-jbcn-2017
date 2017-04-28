@@ -29,3 +29,7 @@ Simply
 ```sh
 $ docker-compose up -d
 ```
+# License
+
+The content of this project itself is licensed under the [Attribution-NonCommercial-ShareAlike CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0) license
+![alt](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
