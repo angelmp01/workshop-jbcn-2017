@@ -54,6 +54,14 @@ services:
       - registry-data:/var/lib/registry
     networks:
       stack-ci-network:
+  selenium:
+    image: selenium/standalone-chrome
+    hostname: selenium
+    restart: always
+    ports:
+      - 4444:4444
+    networks:
+      stack-ci-network:
 networks:
   stack-ci-network:
 volumes:
