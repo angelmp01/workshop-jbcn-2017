@@ -1,5 +1,14 @@
 version: "3"
 services:
+  nginx:
+    build:
+      context: ./nginx
+    hostname: nginx
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      stack-ci-network:
   gitlab:
     image: gitlab/gitlab-ce
     hostname: gitlab
