@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+docker volume rm workshopjbcn2017_gitlab-data
+docker volume rm workshopjbcn2017_gitlab-data-config
+docker volume rm workshopjbcn2017_gitlab-data-logs
+
+docker volume rm workshopjbcn2017_jenkins-data
+
+docker volume rm workshopjbcn2017_sonarqube-data
+
+docker volume rm workshopjbcn2017_nexus-data
+
+docker volume rm workshopjbcn2017_registry-data
