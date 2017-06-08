@@ -6,6 +6,8 @@ services:
     restart: always
     ports:
       - 90:80
+    environment:
+      - GITLAB_ROOT_PASSWORD=jBCNConf2017
     volumes:
       - gitlab-data-config:/etc/gitlab
       - gitlab-data-logs:/var/log/gitlab
