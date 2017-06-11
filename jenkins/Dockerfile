@@ -25,14 +25,11 @@ RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
 
 # Copy in local config files
 COPY jenkins.sh /usr/local/bin/jenkins.sh
-COPY plugins.sh /usr/local/bin/plugins.sh
-RUN chmod +x /usr/local/bin/plugins.sh
 RUN chmod +x /usr/local/bin/jenkins.sh
 
 # Install default plugins
 COPY plugins.txt /tmp/plugins.txt
-RUN /usr/local/bin/plugins.sh /tmp/plugins.txt
-
+RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
 # Switch to the jenkins user
 USER jenkins
 
