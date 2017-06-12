@@ -28,11 +28,40 @@ to deliver fast and quality code focusing on coding itself and not in the infras
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
 
+In order to speed up the setup of the workshop, attendants are recommended to download before hand the docker images to be used within the workshop
+
+```sh
+$ docker pull gitlab/gitlab-ce
+$ docker pull jenkinsci/jenkins:lts
+$ docker pull sonatype/nexus3
+$ docker pull sonarqube
+$ docker pull registry
+$ docker pull selenium/standalone-chrome
+$ docker pull openshift/origin:v1.5.1
+```
+
 ## Run
 Simply
 ```sh
 $ docker-compose up -d
 ```
+
+## Importing Code for the workshop
+
+Replace PERSONAL_TOKEN_HERE with the one provided during the workshop
+```sh
+$ ./gitlab/import-github-repos.sh
+```
+
+## External repository code
+
+- [https://github.com/atSistemas/webinar-bat-desk](webinar-bat-desk)
+- [https://github.com/atSistemas/webinar-bat-architecture-common](webinar-bat-architecture-common)
+- [https://github.com/atSistemas/webinar-bat-architecture-testing](webinar-bat-architecture-testing)
+
+## External webinar video
+
+This workshop uses the code from an existing webinar that can be found [here](https://www.youtube.com/watch?v=ldBNG5zodro)
 # License
 
 The content of this project itself is licensed under the [Attribution-NonCommercial-ShareAlike CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0) license
