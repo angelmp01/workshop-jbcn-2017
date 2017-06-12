@@ -17,6 +17,10 @@ RUN ln -s /opt/apache-maven-3.5.0 /opt/maven
 RUN ln -s /opt/maven/bin/mvn /usr/local/bin
 RUN rm -f /tmp/apache-maven-3.5.0.tar.gz
 ENV MAVEN_HOME /opt/maven
+# add nexus settings
+COPY settings.xml /opt/maven/conf/settings.xml
+
+RUN chown -R jenkins:jenkins /opt/apache-maven-3.5.0
 
 # `/usr/share/jenkins/ref/` contains all reference configuration we want
 # to set on a fresh new installation. Use it to bundle additional plugins
