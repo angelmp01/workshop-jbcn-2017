@@ -20,6 +20,7 @@ to deliver fast and quality code focusing on coding itself and not in the infras
     - Accesible via port 10000
 - Docker Registry
     - Accesible via port 5000
+    - Login user//password as admin//admin
 - Selenium Grid Standalone - Chrome
     - Accesible via port 4444
 - Openshift
@@ -103,7 +104,7 @@ $ ./gitlab/import-github-repos.sh
 
 ## External webinar video
 
-This workshop uses the code from an existing webinar that can be found [here](https://www.youtube.com/watch?v=ldBNG5zodro)
+This workshop uses the code from an existing webinar that can be found [here](https://www.youtube.com/watch?v=ldBNG5zodro). This video is in spanish
 # License
 
 The content of this project itself is licensed under the [Attribution-NonCommercial-ShareAlike CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0) license
