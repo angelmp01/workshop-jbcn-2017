@@ -24,7 +24,7 @@ to deliver fast and quality code focusing on coding itself and not in the infras
     - Accesible via port 4444
 - Openshift
     - Accessible via port 8443, using HTTPS
-## Requirements
+## System Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
 
