@@ -16,7 +16,7 @@ RUN ln -s /opt/maven/bin/mvn /usr/local/bin
 RUN rm -f /tmp/apache-maven-3.5.0.tar.gz
 ENV MAVEN_HOME /opt/maven
 # add nexus settings
-COPY settings.xml /opt/maven/conf/settings.xml
+COPY nexus/settings.xml /opt/maven/conf/settings.xml
 
 RUN chown -R jenkins:jenkins /opt/apache-maven-3.5.0
 
@@ -24,13 +24,14 @@ RUN chown -R jenkins:jenkins /opt/apache-maven-3.5.0
 # to set on a fresh new installation. Use it to bundle additional plugins
 # or config file with your custom jenkins Docker image.
 RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
+COPY credentials/addCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/addCredentials.groovy
 
 # Copy in local config files
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 RUN chmod +x /usr/local/bin/jenkins.sh
 
 # Install default plugins
-COPY plugins.txt /tmp/plugins.txt
+COPY plugins/plugins.txt /tmp/plugins.txt
 RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
 
 #adding jenkins jobs
