@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+docker pull gitlab/gitlab-ce
+docker pull jenkinsci/jenkins:lts
+docker pull sonatype/nexus3
+docker pull sonarqube
+docker pull registry
+docker pull selenium/standalone-chrome
+docker pull openshift/origin:v1.5.1
