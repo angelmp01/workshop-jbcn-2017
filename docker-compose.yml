@@ -1,8 +1,18 @@
 version: "3"
 services:
   nginx:
-    build:
-      context: ./nginx
+    image: nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
+    depends_on:
+      - jenkins
+      - gitlab
+      - nexus
+      - sonarqube
+      - registry
+      - selenium
+      - openshift-origin
     hostname: nginx
     restart: always
     ports:
