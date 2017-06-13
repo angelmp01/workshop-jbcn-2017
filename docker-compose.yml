@@ -7,32 +7,32 @@ services:
       - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
     depends_on:
       - jenkins
-      - gitlab
-      - nexus
-      - sonarqube
-      - registry
-      - selenium
-      - openshift-origin
+#      - gitlab
+#      - nexus
+#      - sonarqube
+#      - registry
+#      - selenium
+#      - openshift-origin
     hostname: nginx
     restart: always
     ports:
       - 80:80
     networks:
       stack-ci-network:
-  gitlab:
-    image: gitlab/gitlab-ce
-    hostname: gitlab
-    restart: always
-    ports:
-      - 90:80
-    environment:
-      - GITLAB_ROOT_PASSWORD=jBCNConf2017
-    volumes:
-      - gitlab-data-config:/etc/gitlab
-      - gitlab-data-logs:/var/log/gitlab
-      - gitlab-data:/var/opt/gitlab
-    networks:
-      stack-ci-network:
+#  gitlab:
+#    image: gitlab/gitlab-ce
+#    hostname: gitlab
+#    restart: always
+#    ports:
+#      - 90:80
+#    environment:
+#      - GITLAB_ROOT_PASSWORD=jBCNConf2017
+#    volumes:
+#      - gitlab-data-config:/etc/gitlab
+#      - gitlab-data-logs:/var/log/gitlab
+#      - gitlab-data:/var/opt/gitlab
+#    networks:
+#      stack-ci-network:
   jenkins:
     build:
       context: ./jenkins
@@ -45,67 +45,67 @@ services:
       - jenkins-data:/var/jenkins_home
     networks:
       stack-ci-network:
-  nexus:
-    image: sonatype/nexus3
-    hostname: nexus
-    restart: always
-    ports:
-      - 8081:8081
-    volumes:
-      - nexus-data:/nexus-data
-    networks:
-     stack-ci-network:
-  sonarqube:
-    image: sonarqube
-    hostname: sonarqube
-    restart: always
-    ports:
-      - 10000:9000
-    volumes:
-      - sonarqube-data:/opt/sonarqube/data
-    networks:
-      stack-ci-network:
-  registry:
-    image: registry
-    hostname: registry
-    restart: always
-    ports:
-      - 5000:5000
-    volumes:
-      - registry-data:/var/lib/registry
-    networks:
-      stack-ci-network:
-  selenium:
-    image: selenium/standalone-chrome
-    hostname: selenium
-    restart: always
-    ports:
-      - 4444:4444
-    networks:
-      stack-ci-network:
-  openshift-origin:
-    image: openshift/origin:v1.5.1
-    privileged: true
-    pid: host
-    ports:
-      - 8443:8443
-    command: start
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-      - /var/lib/docker:/var/lib/docker:rw
-      - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rw
-    networks:
-      stack-ci-network:
+#  nexus:
+#    image: sonatype/nexus3
+#    hostname: nexus
+#    restart: always
+#    ports:
+#      - 8081:8081
+#    volumes:
+#      - nexus-data:/nexus-data
+#    networks:
+#     stack-ci-network:
+#  sonarqube:
+#    image: sonarqube
+#    hostname: sonarqube
+#    restart: always
+#    ports:
+#      - 10000:9000
+#    volumes:
+#      - sonarqube-data:/opt/sonarqube/data
+#    networks:
+#      stack-ci-network:
+#  registry:
+#    image: registry
+#    hostname: registry
+#    restart: always
+#    ports:
+#      - 5000:5000
+#    volumes:
+#      - registry-data:/var/lib/registry
+#    networks:
+#      stack-ci-network:
+#  selenium:
+#    image: selenium/standalone-chrome
+#    hostname: selenium
+#    restart: always
+#    ports:
+#      - 4444:4444
+#    networks:
+#      stack-ci-network:
+#  openshift-origin:
+#    image: openshift/origin:v1.5.1
+#    privileged: true
+#    pid: host
+#    ports:
+#      - 8443:8443
+#    command: start
+#    volumes:
+#      - /:/rootfs:ro
+#      - /var/run:/var/run:rw
+#      - /sys:/sys
+#      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+#      - /var/lib/docker:/var/lib/docker:rw
+#      - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rw
+#    networks:
+#      stack-ci-network:
 networks:
   stack-ci-network:
 volumes:
-  gitlab-data-config:
-  gitlab-data-logs:
-  gitlab-data:
+#  gitlab-data-config:
+#  gitlab-data-logs:
+#  gitlab-data:
   jenkins-data:
-  nexus-data:
-  sonarqube-data:
-  registry-data:
+#  nexus-data:
+#  sonarqube-data:
+#  registry-data:
