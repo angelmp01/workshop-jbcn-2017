@@ -28,6 +28,10 @@ to deliver fast and quality code focusing on coding itself and not in the infras
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
 
+### For Windows Users
+- (VirtualBox)[https://www.virtualbox.org/wiki/Downloads] (>= 5.1.22)
+- It's required to have installed [Vagrant](https://www.vagrantup.com/downloads.html) (>= 1.9.3)
+
 In order to speed up the setup of the workshop, attendants are recommended to download before hand the docker images to be used within the workshop
 
 ```sh
@@ -39,13 +43,51 @@ $ docker pull registry
 $ docker pull selenium/standalone-chrome
 $ docker pull openshift/origin:v1.5.1
 ```
-
-## Run
+or
+```sh 
+$ ./pull-all-docker-images-before-the-workshop
+```
+## Stack lifecycle
+### Run
 Simply
 ```sh
 $ docker-compose up -d
 ```
+or
+```sh
+$ ./start
+```
+### Stop
+```sh
+$ docker-compose up -d
+```
+or
+```sh
+$ ./stop
+```
 
+### Volume Housekeeping
+```sh
+$ docker volume rm workshopjbcn2017_gitlab-data
+$ docker volume rm workshopjbcn2017_gitlab-data-config
+$ docker volume rm workshopjbcn2017_gitlab-data-logs
+$ docker volume rm workshopjbcn2017_jenkins-data
+$ docker volume rm workshopjbcn2017_sonarqube-data
+$ docker volume rm workshopjbcn2017_nexus-data
+$ docker volume rm workshopjbcn2017_registry-data
+```
+or
+```sh
+$ ./volume-housekeeping
+```
+## Logs
+```sh
+$ docker-compose logs -f
+```
+or
+```sh
+$ ./logs
+```
 ## Importing Code for the workshop
 
 Replace PERSONAL_TOKEN_HERE with the one provided during the workshop
