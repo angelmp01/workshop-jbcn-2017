@@ -19,6 +19,18 @@ services:
       - 80:80
     networks:
       stack-ci-network:
+  jenkins:
+    build:
+      context: ./jenkins
+    hostname: jenkins
+    restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - jenkins-data:/var/jenkins_home
+    networks:
+      stack-ci-network:
   gitlab:
     image: gitlab/gitlab-ce
     hostname: gitlab
@@ -31,18 +43,6 @@ services:
       - gitlab-data-config:/etc/gitlab
       - gitlab-data-logs:/var/log/gitlab
       - gitlab-data:/var/opt/gitlab
-    networks:
-      stack-ci-network:
-  jenkins:
-    build:
-      context: ./jenkins
-    hostname: jenkins
-    restart: always
-    ports:
-      - 8080:8080
-      - 50000:50000
-    volumes:
-      - jenkins-data:/var/jenkins_home
     networks:
       stack-ci-network:
   nexus:
@@ -102,10 +102,10 @@ services:
 networks:
   stack-ci-network:
 volumes:
+  jenkins-data:
   gitlab-data-config:
   gitlab-data-logs:
   gitlab-data:
-  jenkins-data:
   nexus-data:
   sonarqube-data:
   registry-data:
