@@ -17,7 +17,8 @@ Vagrant.configure(2) do |config|
   config.vm.network :forwarded_port, guest: 8443, host: 8443
   config.vm.network :forwarded_port, guest: 50000, host: 50000
 
-  config.vm.synced_folder "/home/elliot/workspace/workshop-jbcn-2017", "/workshop-jbcn-2017"
+  config.vm.synced_folder "/home/jtimon/IdeaProjects/workshop-jbcn-2017", "/workshop-jbcnconf-2017"
+  #config.vm.synced_folder "<CHANGE_YOUR_PROJETC_PATH_HERE>", "/workshop-jbcn-2017"
 
   config.vm.provider "virtualbox" do |vb|
       vb.memory = "8092"

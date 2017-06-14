@@ -92,6 +92,18 @@ or
 ```sh
 $ ./logs
 ```
+## Stack lifecycle Vagrant
+### Change project folder path
+```sh
+ config.vm.synced_folder "<CHANGE_YOUR_PROJETC_PATH_HERE>", "/workshop-jbcn-2017"
+```
+### Run
+```sh
+ $ vagrant up --provision
+ $ vagrant ssh
+ $ cd /workshop-jbcnconf-2017
+ $ sudo ./start
+```
 ## Importing Code for the workshop
 
 Replace PERSONAL_TOKEN_HERE with the one provided during the workshop
