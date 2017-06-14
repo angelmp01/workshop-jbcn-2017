@@ -20,11 +20,14 @@ to deliver fast and quality code focusing on coding itself and not in the infras
     - Accesible via port 13000
 - Docker Registry
     - Accesible via port 14000
-    - Login user//password as admin//admin
+    - Login as admin//admin
 - Selenium Grid Standalone - Chrome
     - Accesible via port 15000
 - Openshift
     - Accessible via port 8443, using HTTPS
+- Graylog
+    - Accesible via port 9000
+    - Login as admin//admin
 ## System Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)

@@ -12,6 +12,13 @@ services:
       - gitlab-data-config:/etc/gitlab
       - gitlab-data-logs:/var/log/gitlab
       - gitlab-data:/var/opt/gitlab
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-gitlab
+    depends_on:
+      - graylog
     networks:
       stack-ci-network:
   jenkins:
@@ -23,6 +30,14 @@ services:
       - 11000:8080
     volumes:
       - jenkins-data:/var/jenkins_home
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+#        gelf-address: "udp://${DOCKER_HOST}:12201"
+        tag: tag-jenkins
+    depends_on:
+      - graylog
     networks:
       stack-ci-network:
   nexus:
@@ -33,6 +48,13 @@ services:
       - 12000:8081
     volumes:
       - nexus-data:/nexus-data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-nexus
+    depends_on:
+          - graylog
     networks:
      stack-ci-network:
   sonarqube:
@@ -43,6 +65,13 @@ services:
       - 13000:9000
     volumes:
       - sonarqube-data:/opt/sonarqube/data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-sonarqube
+    depends_on:
+          - graylog
     networks:
       stack-ci-network:
   registry:
@@ -53,6 +82,13 @@ services:
       - 14000:5000
     volumes:
       - registry-data:/var/lib/registry
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-registry
+    depends_on:
+          - graylog
     networks:
       stack-ci-network:
   selenium:
@@ -61,6 +97,13 @@ services:
     restart: always
     ports:
       - 15000:4444
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-selenium
+    depends_on:
+          - graylog
     networks:
       stack-ci-network:
   openshift-origin:
@@ -79,6 +122,45 @@ services:
       - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rw
     networks:
       stack-ci-network:
+  mongo:
+    image: "mongo:3"
+    volumes:
+      - graylog-data-mongo:/data/db
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-mongo-graylog
+    networks:
+      stack-ci-network:
+  elasticsearch:
+    image: "elasticsearch:2"
+    command: "elasticsearch -Des.cluster.name='graylog'"
+    volumes:
+      - graylog-data-elasticsearch:/usr/share/elasticsearch/data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://192.168.1.41:12201
+        tag: tag-elasticsearch-graylog
+    networks:
+      stack-ci-network:
+  graylog:
+    build:
+      context: ./graylog
+    hostname: graylog
+    volumes:
+      - graylog-data-journal:/usr/share/graylog/data/journal
+      - graylog-config:/usr/share/graylog/data/config
+    depends_on:
+      - mongo
+      - elasticsearch
+    ports:
+      - 9000:9000
+      - 12201/udp:12201/udp
+      - 1514/udp:1514/udp
+    networks:
+      stack-ci-network:
 networks:
   stack-ci-network:
 volumes:
@@ -89,3 +171,7 @@ volumes:
   nexus-data:
   sonarqube-data:
   registry-data:
+  graylog-data-mongo:
+  graylog-data-elasticsearch:
+  graylog-data-journal:
+  graylog-config:
