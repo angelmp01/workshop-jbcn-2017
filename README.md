@@ -11,18 +11,18 @@ We propose a solution that aims at minimising the time-to-market by providing an
 to deliver fast and quality code focusing on coding itself and not in the infrastructure or the setting up of the environment required.
 # What´s under the hood?
 - Gitlab
-    - Accesible via port 90
-- Jenkins
-    - Accesible via port 8080
-- Nexus
-    - Accesible via port 8081
-- Sonarqube
     - Accesible via port 10000
+- Jenkins
+    - Accesible via port 11000
+- Nexus
+    - Accesible via port 12000
+- Sonarqube
+    - Accesible via port 13000
 - Docker Registry
-    - Accesible via port 5000
+    - Accesible via port 14000
     - Login user//password as admin//admin
 - Selenium Grid Standalone - Chrome
-    - Accesible via port 4444
+    - Accesible via port 15000
 - Openshift
     - Accessible via port 8443, using HTTPS
 ## System Requirements
