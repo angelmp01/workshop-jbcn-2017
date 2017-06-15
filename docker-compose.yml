@@ -1,74 +1,111 @@
 version: "3"
 services:
   gitlab:
-    image: gitlab/gitlab-ce:latest
+    image: gitlab/gitlab-ce
     hostname: gitlab
-    restart: always
     ports:
-      - 90:80
+      - 10000:80
     environment:
       - GITLAB_ROOT_PASSWORD=jBCNConf2017
     volumes:
       - gitlab-data-config:/etc/gitlab
       - gitlab-data-logs:/var/log/gitlab
       - gitlab-data:/var/opt/gitlab
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-gitlab
+    depends_on:
+      - graylog
     networks:
       stack-ci-network:
   jenkins:
     build:
       context: ./jenkins
     hostname: jenkins
-    restart: always
     ports:
-      - 8080:8080
-      - 50000:50000
+      - 11000:8080
     volumes:
       - jenkins-data:/var/jenkins_home
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-jenkins
+    extra_hosts:
+      - "openshift:${DOCKER_HOST_IP}"
+    depends_on:
+      - graylog
     networks:
       stack-ci-network:
   nexus:
     image: sonatype/nexus3
     hostname: nexus
-    restart: always
     ports:
-      - 8081:8081
+      - 12000:8081
     volumes:
       - nexus-data:/nexus-data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-nexus
+    depends_on:
+          - graylog
     networks:
      stack-ci-network:
   sonarqube:
     image: sonarqube
     hostname: sonarqube
-    restart: always
     ports:
-      - 10000:9000
+      - 13000:9000
     volumes:
       - sonarqube-data:/opt/sonarqube/data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-sonarqube
+    depends_on:
+          - graylog
     networks:
       stack-ci-network:
   registry:
     image: registry
     hostname: registry
-    restart: always
     ports:
-      - 5000:5000
+      - 14000:5000
     volumes:
       - registry-data:/var/lib/registry
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-registry
+    depends_on:
+          - graylog
     networks:
       stack-ci-network:
   selenium:
     image: selenium/standalone-chrome
     hostname: selenium
-    restart: always
     ports:
-      - 4444:4444
+      - 15000:4444
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-selenium
+    depends_on:
+          - graylog
     networks:
       stack-ci-network:
   openshift-origin:
-    image: openshift/origin
+    image: openshift/origin:v1.5.1
     privileged: true
-    pid: "host"
-    network_mode: "host"
+    pid: host
+    network_mode: host
     command: start
     volumes:
       - /:/rootfs:ro
@@ -77,6 +114,45 @@ services:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
       - /var/lib/docker:/var/lib/docker:rw
       - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rslave
+  mongo:
+    image: "mongo:3"
+    volumes:
+      - graylog-data-mongo:/data/db
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-mongo-graylog
+    networks:
+      stack-ci-network:
+  elasticsearch:
+    image: "elasticsearch:2"
+    command: "elasticsearch -Des.cluster.name='graylog'"
+    volumes:
+      - graylog-data-elasticsearch:/usr/share/elasticsearch/data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
+        tag: tag-elasticsearch-graylog
+    networks:
+      stack-ci-network:
+  graylog:
+    build:
+      context: ./graylog
+    hostname: graylog
+    volumes:
+      - graylog-data-journal:/usr/share/graylog/data/journal
+      - graylog-config:/usr/share/graylog/data/config
+    depends_on:
+      - mongo
+      - elasticsearch
+    ports:
+      - 9000:9000
+      - 12201/udp:12201/udp
+      - 1514/udp:1514/udp
+    networks:
+      stack-ci-network:
 networks:
   stack-ci-network:
 volumes:
@@ -87,3 +163,7 @@ volumes:
   nexus-data:
   sonarqube-data:
   registry-data:
+  graylog-data-mongo:
+  graylog-data-elasticsearch:
+  graylog-data-journal:
+  graylog-config:

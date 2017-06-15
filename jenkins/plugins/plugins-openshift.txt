@@ -3,8 +3,10 @@ git
 git-client
 git-server
 gitlab-plugin
+github-api
 workflow-scm-step
 workflow-step-api
+plain-credentials
 credentials
 ssh-credentials
 structs
@@ -15,3 +17,6 @@ scm-api
 junit
 script-security
 display-url-api
+openshift-sync
+openshift-pipeline:1.0.44
+openshift-client
