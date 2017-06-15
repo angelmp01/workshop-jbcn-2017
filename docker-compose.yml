@@ -105,8 +105,7 @@ services:
     image: openshift/origin:v1.5.1
     privileged: true
     pid: host
-    ports:
-      - 8443:8443
+    network_mode: host
     command: start
     volumes:
       - /:/rootfs:ro
@@ -114,9 +113,7 @@ services:
       - /sys:/sys
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
       - /var/lib/docker:/var/lib/docker:rw
-      - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rw
-    networks:
-      stack-ci-network:
+      - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rslave
   mongo:
     image: "mongo:3"
     volumes:

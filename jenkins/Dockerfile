@@ -43,7 +43,7 @@ RUN chmod +x /usr/local/bin/jenkins.sh
 
 # Install default plugins
 COPY plugins/plugins.txt /tmp/plugins.txt
-RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh; sleep 10
+RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
 # RUN cat /tmp/plugins-openshift.txt | xargs /usr/local/bin/install-plugins.sh
 
 #adding jenkins jobs
