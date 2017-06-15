@@ -20,11 +20,14 @@ to deliver fast and quality code focusing on coding itself and not in the infras
     - Accesible via port 13000
 - Docker Registry
     - Accesible via port 14000
-    - Login user//password as admin//admin
+    - Login as admin//admin
 - Selenium Grid Standalone - Chrome
     - Accesible via port 15000
 - Openshift
     - Accessible via port 8443, using HTTPS
+- Graylog
+    - Accesible via port 9000
+    - Login as admin//admin
 ## System Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
@@ -88,6 +91,18 @@ $ docker-compose logs -f
 or
 ```sh
 $ ./logs
+```
+## Stack lifecycle Vagrant
+### Change project folder path
+```sh
+ config.vm.synced_folder "<CHANGE_YOUR_PROJETC_PATH_HERE>", "/workshop-jbcn-2017"
+```
+### Run
+```sh
+ $ vagrant up --provision
+ $ vagrant ssh
+ $ cd /workshop-jbcnconf-2017
+ $ sudo ./start
 ```
 ## Importing Code for the workshop
 
