@@ -3,6 +3,10 @@ MAINTAINER cmcornejo@atsistemas.com
 
 USER root
 
+RUN apt-get update -qq && \
+      apt-get -y install sudo && \
+      rm -rf /var/lib/apt/lists/*
+
 #maven installation
 RUN wget --no-verbose -O /tmp/apache-maven-3.5.0.tar.gz http://ftp.cixug.es/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
 
@@ -44,16 +48,15 @@ RUN chmod +x /usr/local/bin/jenkins.sh
 # Install default plugins
 COPY plugins/plugins.txt /tmp/plugins.txt
 RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
-# RUN cat /tmp/plugins-openshift.txt | xargs /usr/local/bin/install-plugins.sh
 
 #adding jenkins jobs
-RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-architecture-common
-RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-architecture-testing
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk
 
-COPY jobs/webinar-bat-architecture-common/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-architecture-common/config.xml
-COPY jobs/webinar-bat-architecture-testing/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-architecture-testing/config.xml
 COPY jobs/webinar-bat-desk/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk/config.xml
+
+RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
+
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 # Switch to the jenkins user
 USER jenkins

@@ -46,3 +46,4 @@ windows-slaves
 ws-cleanup
 pipeline-multibranch-defaults
 blueocean:1.0.0
+docker-workflow
