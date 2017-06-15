@@ -7,6 +7,7 @@ docker pull sonarqube
 docker pull registry
 docker pull selenium/standalone-chrome
 docker pull openshift/origin:v1.5.1
+sh <(curl https://raw.githubusercontent.com/openshift/origin/v1.5.1/examples/sample-app/pullimages.sh)
 docker pull mongo:3
 docker pull elasticsearch:2
 docker pull graylog2/server:2.1.1-1
