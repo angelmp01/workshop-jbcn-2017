@@ -10,3 +10,5 @@ docker volume rm workshopjbcn2017_graylog-data-mongo
 docker volume rm workshopjbcn2017_graylog-data-elasticsearch
 docker volume rm workshopjbcn2017_graylog-data-journal
 docker volume rm workshopjbcn2017_graylog-config
+echo "Removing openshift local volumes."
+docker run --rm -u 0 -v /var/lib/origin:/tmp/origin:rw busybox rm -Rf /tmp/origin/openshift.local.volumes
