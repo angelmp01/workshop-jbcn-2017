@@ -108,7 +108,7 @@ $ ./logs
 
 Replace PERSONAL_TOKEN_HERE with the one provided during the workshop
 ```sh
-$ TOKEN=<TO_BE_PROVIDED> ./gitlab/import-github-repos.sh
+$ TOKEN=<PERSONAL_TOKEN_HERE> ./gitlab/import-github-repos.sh
 ```
 
 ## External repository code
