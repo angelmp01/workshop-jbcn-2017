@@ -20,6 +20,10 @@ COPY nexus/settings.xml /opt/maven/conf/settings.xml
 
 RUN chown -R jenkins:jenkins /opt/apache-maven-3.5.0
 
+# Install Openshift client
+RUN wget --no-verbose -O /tmp/oc.tar.gz https://github.com/openshift/origin/releases/download/v1.5.1/openshift-origin-client-tools-v1.5.1-7b451fc-linux-64bit.tar.gz
+RUN tar xzf /tmp/oc.tar.gz --strip 1 -C /usr/local/bin/
+
 # `/usr/share/jenkins/ref/` contains all reference configuration we want
 # to set on a fresh new installation. Use it to bundle additional plugins
 # or config file with your custom jenkins Docker image.
@@ -32,7 +36,8 @@ RUN chmod +x /usr/local/bin/jenkins.sh
 
 # Install default plugins
 COPY plugins/plugins.txt /tmp/plugins.txt
-RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
+RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh; sleep 10
+# RUN cat /tmp/plugins-openshift.txt | xargs /usr/local/bin/install-plugins.sh
 
 #adding jenkins jobs
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-architecture-common
