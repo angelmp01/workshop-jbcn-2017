@@ -50,10 +50,25 @@ RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-architecture-common
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-architecture-testing
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk
+RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-merge-request
+RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-creation
+
 
 COPY jobs/webinar-bat-architecture-common/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-architecture-common/config.xml
 COPY jobs/webinar-bat-architecture-testing/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-architecture-testing/config.xml
 COPY jobs/webinar-bat-desk/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk/config.xml
+COPY jobs/webinar-bat-desk-merge-request/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-merge-request/config.xml
+COPY jobs/webinar-bat-desk-branch-creation/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-creation/config.xml
+
+#adding global library.
+RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/src
+RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/src/utils
+RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/vars
+
+COPY workflow-libs/src/utils/MergeRequestApi2.groovy /usr/share/jenkins/ref/workflow-libs/src/utils/MergeRequestApi2.groovy
+COPY workflow-libs/vars/acceptmergerequest.groovy /usr/share/jenkins/ref/workflow-libs/vars/acceptmergerequest.groovy
+COPY workflow-libs/vars/getmergerequesttarget.groovy /usr/share/jenkins/ref/workflow-libs/vars/getmergerequesttarget.groovy
+
 
 # Switch to the jenkins user
 USER jenkins
