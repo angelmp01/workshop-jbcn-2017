@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.11">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.synopsys.arc.jenkinsci.plugins.jobrestrictions.jobs.JobRestrictionProperty plugin="job-restrictions@0.6"/>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>from</name>
+          <description></description>
+          <defaultValue>feature/jbcnconf-2017</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>version</name>
+          <description></description>
+          <defaultValue>1.0.1-SNAPSHOT</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>branchName</name>
+          <description></description>
+          <defaultValue>feature/issue-XXXX</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers/>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.34">
+    <script>node {
+    stage(&apos;clean-workspace&apos;) {
+        cleanWs()
+    }
+    
+    stage(&apos;clone-branch-creation&apos;) {
+        checkout([$class: &apos;GitSCM&apos;, 
+                 branches: [[name: &quot;*/$from&quot;]], 
+                 doGenerateSubmoduleConfigurations: false, 
+                 extensions: [[$class: &apos;LocalBranch&apos;, localBranch: &quot;$branchName&quot;]], 
+                 submoduleCfg: [], 
+                 userRemoteConfigs: [[credentialsId: &apos;gitlab&apos;, url: &apos;http://gitlab/root/webinar-bat-desk.git&apos;]]])
+    }
+    
+    stage(&apos;set-version&apos;) {
+        withMaven {
+            sh &quot;mvn versions:set -DnewVersion=$version&quot;
+        }       
+    }
+    
+    stage(&apos;push&apos;) {
+        withCredentials([usernamePassword(credentialsId: &apos;gitlab&apos;, passwordVariable: &apos;GIT_PASSWORD&apos;, usernameVariable: &apos;GIT_USERNAME&apos;)]) {
+            sh &apos;git config --global user.email &quot;atSistemas@atsistemas.com&quot;&apos;
+            sh &apos;git config --global user.name &quot;atSistemas&quot;&apos;
+            sh &apos;git commit -am &quot;Branch creation&quot;&apos;
+            sh &quot;git push http://${GIT_USERNAME}:${GIT_PASSWORD}@gitlab/root/webinar-bat-desk.git $branchName&quot;
+        }
+    }
+    
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
