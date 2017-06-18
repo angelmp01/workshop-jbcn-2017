@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+docker pull gitlab/gitlab-ce
+docker pull jenkinsci/jenkins:lts
+docker pull sonatype/nexus3
+docker pull sonarqube
+docker pull registry
+docker pull selenium/standalone-chrome
+docker pull openshift/origin:v1.5.1
+docker pull openshift/origin-docker-registry:v1.5.1
+docker pull openshift/origin-deployer:v1.5.1
+docker pull openshift/origin-pod:v1.5.1
+#docker pull openshift/origin-docker-builder:v1.5.1
+#docker pull openshift/origin-sti-builder:v1.5.1
+docker pull mongo:3
+docker pull elasticsearch:2
+docker pull graylog2/server:2.1.1-1

@@ -11,22 +11,30 @@ We propose a solution that aims at minimising the time-to-market by providing an
 to deliver fast and quality code focusing on coding itself and not in the infrastructure or the setting up of the environment required.
 # What´s under the hood?
 - Gitlab
-    - Accesible via port 90
-- Jenkins
-    - Accesible via port 8080
-- Nexus
-    - Accesible via port 8081
-- Sonarqube
     - Accesible via port 10000
+- Jenkins
+    - Accesible via port 11000
+- Nexus
+    - Accesible via port 12000
+- Sonarqube
+    - Accesible via port 13000
 - Docker Registry
-    - Accesible via port 5000
+    - Accesible via port 14000
+    - Login as admin//admin
 - Selenium Grid Standalone - Chrome
-    - Accesible via port 4444
+    - Accesible via port 15000
 - Openshift
     - Accessible via port 8443, using HTTPS
-## Requirements
+- Graylog
+    - Accesible via port 9000
+    - Login as admin//admin
+## System Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
+
+### For Windows Users
+- (VirtualBox)[https://www.virtualbox.org/wiki/Downloads] (>= 5.1.22)
+- It's required to have installed [Vagrant](https://www.vagrantup.com/downloads.html) (>= 1.9.3)
 
 In order to speed up the setup of the workshop, attendants are recommended to download before hand the docker images to be used within the workshop
 
@@ -39,18 +47,68 @@ $ docker pull registry
 $ docker pull selenium/standalone-chrome
 $ docker pull openshift/origin:v1.5.1
 ```
-
-## Run
+or
+```sh 
+$ ./pull-all-docker-images-before-the-workshop
+```
+## Stack lifecycle
+### Run
 Simply
 ```sh
 $ docker-compose up -d
 ```
+or
+```sh
+$ ./start
+```
+### Stop
+```sh
+$ docker-compose up -d
+```
+or
+```sh
+$ ./stop
+```
 
+### Volume Housekeeping
+```sh
+$ docker volume rm workshopjbcn2017_gitlab-data
+$ docker volume rm workshopjbcn2017_gitlab-data-config
+$ docker volume rm workshopjbcn2017_gitlab-data-logs
+$ docker volume rm workshopjbcn2017_jenkins-data
+$ docker volume rm workshopjbcn2017_sonarqube-data
+$ docker volume rm workshopjbcn2017_nexus-data
+$ docker volume rm workshopjbcn2017_registry-data
+```
+or
+```sh
+$ ./volume-housekeeping
+```
+## Logs
+```sh
+$ docker-compose logs -f
+```
+or
+```sh
+$ ./logs
+```
+## Stack lifecycle Vagrant
+### Change project folder path
+```sh
+ config.vm.synced_folder "<CHANGE_YOUR_PROJETC_PATH_HERE>", "/workshop-jbcn-2017"
+```
+### Run
+```sh
+ $ vagrant up --provision
+ $ vagrant ssh
+ $ cd /workshop-jbcnconf-2017
+ $ sudo ./start
+```
 ## Importing Code for the workshop
 
 Replace PERSONAL_TOKEN_HERE with the one provided during the workshop
 ```sh
-$ ./gitlab/import-github-repos.sh
+$ TOKEN=<PERSONAL_TOKEN_HERE> ./gitlab/import-github-repos.sh
 ```
 
 ## External repository code
@@ -61,7 +119,7 @@ $ ./gitlab/import-github-repos.sh
 
 ## External webinar video
 
-This workshop uses the code from an existing webinar that can be found [here](https://www.youtube.com/watch?v=ldBNG5zodro)
+This workshop uses the code from an existing webinar that can be found [here](https://www.youtube.com/watch?v=ldBNG5zodro). This video is in spanish
 # License
 
 The content of this project itself is licensed under the [Attribution-NonCommercial-ShareAlike CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0) license
