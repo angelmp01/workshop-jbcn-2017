@@ -6,7 +6,10 @@ services:
     ports:
       - 10000:80
     environment:
-      - GITLAB_ROOT_PASSWORD=jBCNConf2017
+      GITLAB_OMNIBUS_CONFIG: |
+            postgresql['shared_buffers'] = "256MB"
+            unicorn['worker_processes'] = 2
+            gitlab_rails['initial_root_password'] = "jBCNConf2017"
     volumes:
       - gitlab-data-config:/etc/gitlab
       - gitlab-data-logs:/var/log/gitlab
@@ -26,8 +29,11 @@ services:
     hostname: jenkins
     ports:
       - 11000:8080
+    environment:
+      - JAVA_OPTS=-Xmx768m
     volumes:
       - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     logging:
       driver: gelf
       options:
@@ -37,6 +43,7 @@ services:
       - "openshift:${DOCKER_HOST_IP}"
     depends_on:
       - graylog
+      - gitlab
     networks:
       stack-ci-network:
   nexus:
@@ -44,6 +51,8 @@ services:
     hostname: nexus
     ports:
       - 12000:8081
+    environment:
+      - JAVA_MAX_HEAP=1024m
     volumes:
       - nexus-data:/nexus-data
     logging:
@@ -60,6 +69,8 @@ services:
     hostname: sonarqube
     ports:
       - 13000:9000
+    environment:
+      - JAVA_OPTS=-Xmx768m
     volumes:
       - sonarqube-data:/opt/sonarqube/data
     logging:
@@ -75,7 +86,7 @@ services:
     image: registry
     hostname: registry
     ports:
-      - 14000:5000
+      - 5000:5000
     volumes:
       - registry-data:/var/lib/registry
     logging:
@@ -83,20 +94,6 @@ services:
       options:
         gelf-address: "udp://${DOCKER_HOST_IP}:12201"
         tag: tag-registry
-    depends_on:
-          - graylog
-    networks:
-      stack-ci-network:
-  selenium:
-    image: selenium/standalone-chrome
-    hostname: selenium
-    ports:
-      - 15000:4444
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://${DOCKER_HOST_IP}:12201"
-        tag: tag-selenium
     depends_on:
           - graylog
     networks:
