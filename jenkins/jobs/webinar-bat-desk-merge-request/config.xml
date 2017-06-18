@@ -2,7 +2,7 @@
 <org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@2.15">
   <actions/>
   <description></description>
-  <displayName>webinar-bat-architecture-testing</displayName>
+  <displayName>webinar-bat-desk-merge-request</displayName>
   <properties>
     <org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig plugin="pipeline-model-definition@1.1.5">
       <dockerLabel></dockerLabel>
@@ -36,10 +36,10 @@
       <jenkins.branch.BranchSource>
         <source class="jenkins.plugins.git.GitSCMSource" plugin="git@3.3.0">
           <id>71df5d99-b26a-413c-99f9-8274643db53f</id>
-          <remote>http://gitlab/root/webinar-bat-architecture-testing.git</remote>
+          <remote>http://gitlab/root/webinar-bat-desk.git</remote>
           <credentialsId>gitlab</credentialsId>
           <remoteName>origin</remoteName>
-          <rawRefSpecs>+refs/heads/*:refs/remotes/origin/*</rawRefSpecs>
+          <rawRefSpecs>+refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*</rawRefSpecs>
           <includes>*</includes>
           <excludes></excludes>
           <ignoreOnPushNotifications>false</ignoreOnPushNotifications>
