@@ -16,13 +16,12 @@ to deliver fast and quality code focusing on coding itself and not in the infras
     - Accesible via port 11000
 - Nexus
     - Accesible via port 12000
+    - Login as admin//admin123
 - Sonarqube
     - Accesible via port 13000
 - Docker Registry
     - Accesible via port 14000
     - Login as admin//admin
-- Selenium Grid Standalone - Chrome
-    - Accesible via port 15000
 - Openshift
     - Accessible via port 8443, using HTTPS
 - Graylog
