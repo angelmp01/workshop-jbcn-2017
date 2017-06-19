@@ -1,6 +1,7 @@
 version: "3"
 services:
   gitlab:
+    container_name: gitlab
     image: gitlab/gitlab-ce
     hostname: gitlab
     ports:
@@ -24,13 +25,14 @@ services:
     networks:
       stack-ci-network:
   jenkins:
+    container_name: jenkins
     build:
       context: ./jenkins
     hostname: jenkins
     ports:
       - 11000:8080
     environment:
-      - JAVA_OPTS=-Xmx768m
+      JAVA_OPTS: "-Xmx768m"
     volumes:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
@@ -47,12 +49,13 @@ services:
     networks:
       stack-ci-network:
   nexus:
+    container_name: nexus
     image: sonatype/nexus3
     hostname: nexus
     ports:
       - 12000:8081
     environment:
-      - JAVA_MAX_HEAP=1024m
+      JAVA_MAX_HEAP: 1024m
     volumes:
       - nexus-data:/nexus-data
     logging:
@@ -65,6 +68,7 @@ services:
     networks:
      stack-ci-network:
   sonarqube:
+    container_name: sonarqube
     image: sonarqube
     hostname: sonarqube
     ports:
@@ -83,6 +87,7 @@ services:
     networks:
       stack-ci-network:
   registry:
+    container_name: registry
     image: registry
     hostname: registry
     ports:
@@ -112,6 +117,7 @@ services:
       - /var/lib/docker:/var/lib/docker:rw
       - /var/lib/origin/openshift.local.volumes:/var/lib/origin/openshift.local.volumes:rslave
   mongo:
+    container_name: mongo
     image: "mongo:3"
     volumes:
       - graylog-data-mongo:/data/db
@@ -123,6 +129,7 @@ services:
     networks:
       stack-ci-network:
   elasticsearch:
+    container_name: elasticsearch
     image: "elasticsearch:2"
     command: "elasticsearch -Des.cluster.name='graylog'"
     volumes:
@@ -135,6 +142,7 @@ services:
     networks:
       stack-ci-network:
   graylog:
+    container_name: graylog
     build:
       context: ./graylog
     hostname: graylog
