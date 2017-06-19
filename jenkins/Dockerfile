@@ -45,6 +45,9 @@ RUN chown -R jenkins:jenkins /opt/phantomjs-2.1.1-linux-x86_64
 RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
 COPY credentials/addCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/addCredentials.groovy
 
+# lets configure Jenkins with some defaults
+COPY security-scripting/*.xml /usr/share/jenkins/ref/
+
 # Copy in local config files
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 RUN chmod +x /usr/local/bin/jenkins.sh
@@ -74,8 +77,6 @@ COPY workflow-libs/vars/getmergerequesttarget.groovy /usr/share/jenkins/ref/work
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
 
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
-
-EXPOSE 4444
 
 # Switch to the jenkins user
 USER jenkins
