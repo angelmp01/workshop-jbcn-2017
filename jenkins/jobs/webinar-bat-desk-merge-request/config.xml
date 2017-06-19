@@ -40,7 +40,7 @@
           <credentialsId>gitlab</credentialsId>
           <remoteName>origin</remoteName>
           <rawRefSpecs>+refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*</rawRefSpecs>
-          <includes>*</includes>
+          <includes>merge-requests/*</includes>
           <excludes></excludes>
           <ignoreOnPushNotifications>false</ignoreOnPushNotifications>
         </source>
