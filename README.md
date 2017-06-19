@@ -62,7 +62,7 @@ $ ./start
 ```
 ### Stop
 ```sh
-$ docker-compose up -d
+$ docker-compose down
 ```
 or
 ```sh
