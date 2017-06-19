@@ -7,6 +7,10 @@ RUN apt-get update -qq && \
       apt-get -y install sudo && \
       rm -rf /var/lib/apt/lists/*
 
+ENV TZ=Europe/Madrid
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 #maven installation
 RUN wget --no-verbose -O /tmp/apache-maven-3.5.0.tar.gz http://ftp.cixug.es/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
 
@@ -41,6 +45,9 @@ RUN chown -R jenkins:jenkins /opt/phantomjs-2.1.1-linux-x86_64
 RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
 COPY credentials/addCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/addCredentials.groovy
 
+# lets configure Jenkins with some defaults
+COPY security-scripting/*.xml /usr/share/jenkins/ref/
+
 # Copy in local config files
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 RUN chmod +x /usr/local/bin/jenkins.sh
@@ -54,7 +61,6 @@ RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-merge-request
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-creation
 
-
 COPY jobs/webinar-bat-desk/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk/config.xml
 COPY jobs/webinar-bat-desk-merge-request/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-merge-request/config.xml
 COPY jobs/webinar-bat-desk-branch-creation/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-creation/config.xml
@@ -67,7 +73,6 @@ RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/vars
 COPY workflow-libs/src/utils/MergeRequestApi2.groovy /usr/share/jenkins/ref/workflow-libs/src/utils/MergeRequestApi2.groovy
 COPY workflow-libs/vars/acceptmergerequest.groovy /usr/share/jenkins/ref/workflow-libs/vars/acceptmergerequest.groovy
 COPY workflow-libs/vars/getmergerequesttarget.groovy /usr/share/jenkins/ref/workflow-libs/vars/getmergerequesttarget.groovy
-
 
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
 
