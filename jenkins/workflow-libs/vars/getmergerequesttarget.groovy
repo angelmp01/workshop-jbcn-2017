@@ -4,7 +4,7 @@ import org.gitlab4j.api.*
 String call(String projectName, String mergeid) {
 	println "Get target branch of merge request[$projectName][$mergeid]"
 	
-	GitLabApi gitLabApi = GitLabApi.login(ApiVersion.V4, 'http://gitlab', 'root', 'jBCNConf2017');
+	GitLabApi gitLabApi = GitLabApi.login(GitLabApi.ApiVersion.V4, 'http://gitlab', 'root', 'jBCNConf2017');
 	
 	ProjectApi projectApi  = gitLabApi.getProjectApi()
     
