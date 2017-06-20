@@ -18,14 +18,14 @@ String call(String projectName, String mergeid) {
     }
 	
 	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
-
+  
   String target = null
-
+  
   try {
     target = mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getTargetBranch()
   } catch(Exception e) {
     //Ignore.
-    println "Error to get target branch of merge request information: $e"
+    println "Error to get target branch of merge request[$projectId][$mergeid]: $e"
   }
 
 	return target
