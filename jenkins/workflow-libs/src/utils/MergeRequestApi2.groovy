@@ -29,5 +29,11 @@ class MergeRequestApi2 extends MergeRequestApi {
     
     public void delete(Integer projectId, Integer mergeRequestId) {
         Response response = delete(Response.Status.NO_CONTENT, null, "projects", projectId, "merge_requests", mergeRequestId);
-    }    
+    }   
+    
+    public String getState(Integer projectId, Integer mergeRequestId) {
+      Response response = get(Response.Status.OK, null, "projects", projectId, "merge_request", mergeRequestId);
+      
+      return "$response"
+    } 
 }
