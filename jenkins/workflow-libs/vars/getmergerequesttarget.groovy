@@ -1,5 +1,6 @@
 @Grab('org.gitlab4j:gitlab4j-api:4.2.0')
 import org.gitlab4j.api.*
+import utils.MergeRequestApi2
 
 String call(String projectName, String mergeid) {
 	println "Get target branch of merge request[$projectName][$mergeid]"
