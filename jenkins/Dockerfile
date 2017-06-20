@@ -58,21 +58,12 @@ RUN cat /tmp/plugins.txt | xargs /usr/local/bin/install-plugins.sh
 
 #adding jenkins jobs
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk
-RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-merge-request
+RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-push
 RUN mkdir -p /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-creation
 
 COPY jobs/webinar-bat-desk/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk/config.xml
-COPY jobs/webinar-bat-desk-merge-request/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-merge-request/config.xml
+COPY jobs/webinar-bat-desk-branch-push/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-push/config.xml
 COPY jobs/webinar-bat-desk-branch-creation/config.xml /usr/share/jenkins/ref/jobs/webinar-bat-desk-branch-creation/config.xml
-
-#adding global library.
-RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/src
-RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/src/utils
-RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/vars
-
-COPY workflow-libs/src/utils/MergeRequestApi2.groovy /usr/share/jenkins/ref/workflow-libs/src/utils/MergeRequestApi2.groovy
-COPY workflow-libs/vars/acceptmergerequest.groovy /usr/share/jenkins/ref/workflow-libs/vars/acceptmergerequest.groovy
-COPY workflow-libs/vars/getmergerequesttarget.groovy /usr/share/jenkins/ref/workflow-libs/vars/getmergerequesttarget.groovy
 
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin
 
