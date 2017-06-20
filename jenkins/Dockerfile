@@ -72,6 +72,7 @@ RUN mkdir -p /usr/share/jenkins/ref/workflow-libs/vars
 
 COPY workflow-libs/src/utils/MergeRequestApi2.groovy /usr/share/jenkins/ref/workflow-libs/src/utils/MergeRequestApi2.groovy
 COPY workflow-libs/vars/acceptmergerequest.groovy /usr/share/jenkins/ref/workflow-libs/vars/acceptmergerequest.groovy
+COPY workflow-libs/vars/getmergerequeststate.groovy /usr/share/jenkins/ref/workflow-libs/vars/getmergerequeststate.groovy
 COPY workflow-libs/vars/getmergerequesttarget.groovy /usr/share/jenkins/ref/workflow-libs/vars/getmergerequesttarget.groovy
 
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz && tar --strip-components=1 -xvzf docker-17.05.0-ce.tgz -C /usr/local/bin

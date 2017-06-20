@@ -17,7 +17,7 @@ String call(String projectName, String mergeid) {
         }
     }
 	
-	MergeRequestApi mergeRequestApi = new gitLabApi.getMergeRequestApi()
+	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
 
 	return mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getTargetBranch()
 }
