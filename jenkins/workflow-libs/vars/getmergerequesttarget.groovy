@@ -22,9 +22,9 @@ String call(String projectName, String mergeid) {
   def merge_id = null
   
   for(def mergeRequest : mergeRequestApi.getMergeRequests(projectId)){
-    println "merge request[${mergeRequest.iid}][[${mergeRequest.id}]"
+    println "merge request[$mergeid][${mergeRequest.iid}][${mergeRequest.id}]"
     
-    if(mergeid.equals("${mergeRequest.iid}")) {
+    if(mergeid == "${mergeRequest.iid}") {
        merge_id = mergeRequest.getId()
        break
     }       		
