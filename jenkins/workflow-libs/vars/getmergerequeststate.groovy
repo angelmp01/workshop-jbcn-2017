@@ -2,7 +2,7 @@
 import org.gitlab4j.api.*
 
 String call(String projectName, String mergeid) {
-	println "Get state of merge request[$mergeid]"
+	println "Get state of merge request[$projectName][$mergeid]"
 	
 	GitLabApi gitLabApi = GitLabApi.login('http://gitlab', 'root', 'jBCNConf2017');
 	
@@ -16,8 +16,17 @@ String call(String projectName, String mergeid) {
             break
         }
     }
-
+	
 	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
 
-	return mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getState()
+  String state = null
+
+  try {
+    state = mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getState()
+  } catch(Exception e) {
+    //Ignore.
+    println "Error to get merge request state: $e"
+  }
+
+	return state
 }
