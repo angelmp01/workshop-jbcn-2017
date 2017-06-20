@@ -8,24 +8,37 @@ String call(String projectName, String mergeid) {
 	
 	ProjectApi projectApi  = gitLabApi.getProjectApi()
     
-    def projectId = null
-    
-    for(def project : projectApi.getProjects()) {
-        if(projectName.equals(project.getName())) {
-            projectId = project.getId()
-            break
-        }
-    }
+  def projectId = null
+  
+  for(def project : projectApi.getProjects()) {
+      if(projectName.equals(project.getName())) {
+          projectId = project.getId()
+          break
+      }
+  }
 	
 	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
+  
+  def merge_id = null
+  
+  for(def mergeRequest : mergeRequestApi.getMergeRequests(projectId)){
+    println "merge request[${mergeRequest.iid}][[${mergeRequest.id}]"
+    
+    if(mergeid.equals("${mergeRequest.iid}")) {
+       merge_id = mergeRequest.getId()
+       break
+    }       		
+	}
+  
+  println "merge request id[${merge_id}]"
   
   String target = null
   
   try {
-    target = mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getTargetBranch()
+    target = mergeRequestApi.getMergeRequest(projectId, merge_id)).getTargetBranch()
   } catch(Exception e) {
     //Ignore.
-    println "Error to get target branch of merge request[$projectId][$mergeid]: $e"
+    println "Error to get target branch of merge request[$projectId][$mergeid][$merge_id]: $e"
   }
 
 	return target
