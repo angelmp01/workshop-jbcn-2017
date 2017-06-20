@@ -1,10 +1,10 @@
-@Grab('org.gitlab4j:gitlab4j-api:4.2.0')
+@Grab('org.gitlab4j:gitlab4j-api:4.3.0')
 import org.gitlab4j.api.*
 
 String call(String projectName, String mergeid) {
 	println "Get target branch of merge request[$projectName][$mergeid]"
 	
-	GitLabApi gitLabApi = GitLabApi.login('http://gitlab', 'root', 'jBCNConf2017');
+	GitLabApi gitLabApi = GitLabApi.login(ApiVersion.V4, 'http://gitlab', 'root', 'jBCNConf2017');
 	
 	ProjectApi projectApi  = gitLabApi.getProjectApi()
     
@@ -19,6 +19,7 @@ String call(String projectName, String mergeid) {
 	
 	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
   
+  /*
   def merge_id = null
   
   for(def mergeRequest : mergeRequestApi.getMergeRequests(projectId)){
@@ -31,14 +32,15 @@ String call(String projectName, String mergeid) {
 	}
   
   println "merge request id[${merge_id}]"
-  
+   */
+   
   String target = null
   
   try {
-    target = mergeRequestApi.getMergeRequest(projectId, merge_id)).getTargetBranch()
+    target = mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger())).getTargetBranch()
   } catch(Exception e) {
     //Ignore.
-    println "Error to get target branch of merge request[$projectId][$mergeid][$merge_id]: $e"
+    println "Error to get target branch of merge request[$projectId][$mergeid]: $e"
   }
 
 	return target

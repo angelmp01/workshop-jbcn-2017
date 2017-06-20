@@ -1,4 +1,4 @@
-@Grab('org.gitlab4j:gitlab4j-api:4.2.0')
+@Grab('org.gitlab4j:gitlab4j-api:4.3.0')
 import org.gitlab4j.api.*
 import utils.MergeRequestApi2
 

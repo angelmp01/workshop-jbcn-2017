@@ -1,10 +1,10 @@
-@Grab('org.gitlab4j:gitlab4j-api:4.2.0')
+@Grab('org.gitlab4j:gitlab4j-api:4.3.0')
 import org.gitlab4j.api.*
 
 String call(String projectName, String mergeid) {
 	println "Get state of merge request[$projectName][$mergeid]"
 	
-	GitLabApi gitLabApi = GitLabApi.login('http://gitlab', 'root', 'jBCNConf2017');
+	GitLabApi gitLabApi = GitLabApi.login(ApiVersion.V4, 'http://gitlab', 'root', 'jBCNConf2017');
 	
 	ProjectApi projectApi  = gitLabApi.getProjectApi()
     
@@ -19,6 +19,7 @@ String call(String projectName, String mergeid) {
 	
 	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
   
+  /*
   def merge_id = null
   
   for(def mergeRequest : mergeRequestApi.getMergeRequests(projectId)){
@@ -30,15 +31,16 @@ String call(String projectName, String mergeid) {
     }       		
 	}
   
-  println "merge request id[${merge_id}]"      
+  println "merge request id[${merge_id}]"  
+  */    
 
   String state = null
   
   try {
-    state = mergeRequestApi.getMergeRequest(projectId, merge_id).getState()
+    state = mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getState()
   } catch(Exception e) {
     //Ignore.
-    println "Error to get the state of merge request[$projectId][$mergeid][$merge_id]: $e"
+    println "Error to get the state of merge request[$projectId][$mergeid]: $e"
   }
   
 	return state
