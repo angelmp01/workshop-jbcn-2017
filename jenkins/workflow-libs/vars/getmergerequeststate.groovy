@@ -20,13 +20,13 @@ String call(String projectName, String mergeid) {
 	MergeRequestApi mergeRequestApi = gitLabApi.getMergeRequestApi()
 
   String state = null
-
+  
   try {
     state = mergeRequestApi.getMergeRequest(projectId, mergeid.toInteger()).getState()
   } catch(Exception e) {
     //Ignore.
-    println "Error to get merge request state: $e"
+    println "Error to get the state of merge request[$projectId][$mergeid]: $e"
   }
-
+  
 	return state
 }
