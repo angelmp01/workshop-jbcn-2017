@@ -33,6 +33,19 @@ services:
       - gitlab
     networks:
       stack-ci-network:
+  nexus:
+    container_name: nexus
+    image: sonatype/nexus3
+    hostname: nexus
+    ports:
+      - 12000:8081
+    environment:
+      JAVA_MAX_HEAP: 1024m
+    volumes:
+      - nexus-data:/nexus-data
+      - /etc/timezone:/etc/timezone
+    networks:
+     stack-ci-network:
   sonarqube:
     container_name: sonarqube
     image: sonarqube
@@ -52,4 +65,5 @@ volumes:
   gitlab-data-logs:
   gitlab-data:
   jenkins-data:
+  nexus-data:
   sonarqube-data:
