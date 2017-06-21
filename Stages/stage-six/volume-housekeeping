@@ -6,5 +6,11 @@ docker volume rm workshopjbcn2017_jenkins-data
 docker volume rm workshopjbcn2017_sonarqube-data
 docker volume rm workshopjbcn2017_nexus-data
 docker volume rm workshopjbcn2017_registry-data
+docker volume rm workshopjbcn2017_graylog-data-mongo
+docker volume rm workshopjbcn2017_graylog-data-elasticsearch
+docker volume rm workshopjbcn2017_graylog-data-journal
+docker volume rm workshopjbcn2017_graylog-config
+echo "Removing openshift local volumes."
+docker run --rm -u 0 -v /var/lib/origin:/tmp/origin:rw busybox rm -Rf /tmp/origin/openshift.local.volumes
 
 docker volume ls -qf dangling=true | xargs -r docker volume rm
