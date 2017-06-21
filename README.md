@@ -30,6 +30,7 @@ to deliver fast and quality code focusing on coding itself and not in the infras
 ## System Requirements
 - Docker 17.04.0-ce+ install [here](https://docs.docker.com/engine/installation/) 
 - Docker Compose 1.12.0+ install [here](https://docs.docker.com/compose/install/)
+- 16 GB RAM recommended
 
 ### For Windows Users
 - (VirtualBox)[https://www.virtualbox.org/wiki/Downloads] (>= 5.1.22)
